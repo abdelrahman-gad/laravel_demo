@@ -31,7 +31,7 @@ jobs:
           username: "laravel_demo"
           key: ${{ secrets.EC2_SSH_KEY }}
           script: cd /home/laravel_demo/code
-                    composer install --no-dev
-                    php artisan migrate --force
-                    php artisan config:cache
-                    php artisan route:cache
+                  composer install --no-dev
+                  php artisan migrate --force
+                  php artisan config:cache
+                  php artisan route:cache
