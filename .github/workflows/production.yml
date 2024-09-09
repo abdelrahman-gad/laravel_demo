@@ -33,12 +33,13 @@ jobs:
           script:  |
             cd ${{ secrets.REMOTE_TARGET_DIRECTORY }}
             git pull origin master
-            composer install --no-dev
+            composer install 
             php artisan cache:clear
             php artisan config:cache
             php artisan route:cache
             php artisan migrate --force
             php artisan view:clear
+            php artisan test
 
 
             
