@@ -1,40 +1,40 @@
-# This is a basic workflow to help you get started with Actions
+# # This is a basic workflow to help you get started with Actions
 
-name: Deploy to Community backend Prod instance
+# name: Deploy to Community backend Prod instance
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "main" , "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+# # Controls when the workflow will run
+# on:
+#   # Triggers the workflow on push or pull request events but only for the "master" branch
+#   push:
+#     branches: [ "main" , "master" ]
+#   pull_request:
+#     branches: [ "main", "master" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  Deploy:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   # This workflow contains a single job called "build"
+#   Deploy:
+#     # The type of runner that the job will run on
+#     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+#     # Steps represent a sequence of tasks that will be executed as part of the job
+#     steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#       - uses: actions/checkout@v3
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-         host: ${{ secrets.EC2_HOST }}
-        #  username: ${{ secrets.COMM_USER}}
-         key: ${{ secrets.EC2_SSH_KEY }}
-        #  port: ${{ secrets.COMM_HOST_PORT }}
-         script: 
-            cd /home/laravel_demo/code
-            composer install --no-dev
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
+#       - name: executing remote ssh commands using password
+#         uses: appleboy/ssh-action@master
+#         with:
+#          host: ${{ secrets.EC2_HOST }}
+#         #  username: ${{ secrets.COMM_USER}}
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#         #  port: ${{ secrets.COMM_HOST_PORT }}
+#          script: 
+#             cd /home/laravel_demo/code
+#             composer install --no-dev
+#             php artisan migrate --force
+#             php artisan config:cache
+#             php artisan route:cache
