@@ -30,7 +30,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "./"
-          target: "/var/www/html/laravel-app"
+          target: "/home/laravel_demo/code"
 
       - name: Run deployment script on EC2
         uses: appleboy/ssh-action@v1.0.3
