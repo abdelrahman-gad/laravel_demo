@@ -21,19 +21,21 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST:  ${{ secrets.HOST_DNS }}
-          REMOTE_USER: "laravel_demo"
-          TARGET: "/home/laravel_demo/code/"
+          REMOTE_USER: ${{ secrets.LARAVE_DEMO_HOST_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET_DIRECTORY }}
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
           host:  ${{ secrets.HOST_DNS }}
-          username: "laravel_demo"
+          username: ${{ secrets.LARAVE_DEMO_HOST_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script:  |
-            cd /home/laravel_demo/code
+            cd ${{ secrets.REMOTE_TARGET_DIRECTORY }}
             composer install --optimize-autoloader --no-dev
             php artisan cache:clear
             php artisan config:cache
             php artisan route:cache
             php artisan migrate --force
+
+            
