@@ -20,26 +20,21 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST:  ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.LARAVE_DEMO_HOST_USER }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.LARAVEL_DEMO_HOST_USER }} # Corrected secret name
           TARGET: ${{ secrets.REMOTE_TARGET_DIRECTORY }}
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
-          host:  ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.LARAVE_DEMO_HOST_USER }}
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.LARAVEL_DEMO_HOST_USER }} # Corrected secret name
           key: ${{ secrets.EC2_SSH_KEY }}
-          script:  |
+          script: |
+            set -e
             cd ${{ secrets.REMOTE_TARGET_DIRECTORY }}
-            git pull origin master
-            composer install 
-            php artisan cache:clear
-            php artisan config:cache
-            php artisan route:cache
+            git pull origin HEAD # Updated to pull the current branch
+            composer install --no-dev --optimize-autoloader
+            php artisan optimize:clear
             php artisan migrate --force
-            php artisan view:clear
             php artisan test
-
-
-            
