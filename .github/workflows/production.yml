@@ -9,22 +9,22 @@ on:
 
 jobs:
   deploy:
-    name: Deploy To Production Server (AWS EC2)
+    name: 'Deploy To Production Server (AWS EC2)'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
+      - name: 'Checkout the files'
         uses: actions/checkout@v2
 
-      - name: Deploy to AWS EC2 server using SSH
+      - name: 'Deploy to AWS EC2 server using SSH'
         uses: easingthemes/ssh-deploy@main
-        env:
+        with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST:  ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.LARAVEL_DEMO_HOST_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET_DIRECTORY }}
 
-      - name: Executing remote ssh commands using ssh key
+      - name: 'Executing remote ssh commands using ssh key'
         uses: appleboy/ssh-action@master
         with:
           host:  ${{ secrets.HOST_DNS }}
